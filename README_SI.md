@@ -32,7 +32,7 @@
 
 ## මේ project එකෙන් මොනවාද වෙන්නේ?
 
-Seha කියන්නේ Sinhala/English දෙකෙන්ම ස්වභාවිකව කතා කරන WhatsApp bot එකක්. Gemini primary AI එක. Gemini එක fail වුණොත් විතරක් Groq fallback එක භාවිතා කරනවා. Chat history එක save කරන්නේ නැහැ. User තමන් ගැන පැහැදිලිව කියන නම/වයස/ප්‍රදේශය වගේ කුඩා profile facts විතරයි save කරන්නේ. Baileys 6.7.24 API line එක pin කරලා තියෙන්නේ v7 release-candidate එකේ breaking changes වළක්වන්න.
+Seha කියන්නේ Sinhala/English දෙකෙන්ම ස්වභාවිකව කතා කරන WhatsApp bot එකක්. Gemini primary AI එක. Gemini එක fail වුණොත් විතරක් Groq fallback එක භාවිතා කරනවා. Chat history එක save කරන්නේ නැහැ. User තමන් ගැන පැහැදිලිව කියන නම/වයස/ප්‍රදේශය වගේ කුඩා profile facts විතරයි save කරන්නේ. Baileys 6.7.24 legacy stable version එක භාවිතා කරනවා. v7 release-candidate එකේ breaking API changes තිබෙන නිසා මේ project එකට එය තෝරාගෙන නැහැ.
 
 **වැදගත්:** Baileys කියන්නේ unofficial WhatsApp Web library එකක්. WhatsApp එකේ official Business API එකක් නෙවෙයි. Separate test number එකක් භාවිතා කරන්න. Spam/bulk messaging කරන්න එපා. Account logout/restriction risk එකක් තියෙන්න පුළුවන්.
 
