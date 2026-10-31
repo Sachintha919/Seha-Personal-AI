@@ -1,5 +1,29 @@
 <div align="center">
 
+<img src="https://capsule-render.vercel.app/api?type=waving&color=25D366&height=200&section=header&text=WhatsApp%20AI%20Bot&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Created%20by%20Sachintha%20Lakshan&descAlignY=55&descAlign=50" width="100%"/>
+
+<a href="https://imgbb.com/">
+  <img src="https://i.ibb.co/SDq9xcq1/seha-avatar.png"
+       alt="Seha avatar"
+       width="132"
+       border="0">
+</a>
+
+# 🌸 Seha Personal AI
+
+**A warm, private WhatsApp chat companion — powered by Gemini, with Groq fallback.**
+
+<img src="https://img.shields.io/badge/Platform-Kaggle-20BEFF?style=for-the-badge&logo=kaggle&logoColor=white" alt="Kaggle" />
+<img src="https://img.shields.io/badge/Runtime-Node.js_22-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+<img src="https://img.shields.io/badge/AI-Gemini_%2B_Groq-8E75B2?style=for-the-badge" alt="AI" />
+<img src="https://img.shields.io/badge/Language-Sinhala_%2F_English-FF69B4?style=for-the-badge" alt="Languages" />
+
+[සිංහල උපදෙස්](README_SI.md) · [Features](#features) · [Kaggle setup](#run-on-kaggle) · [Commands](#commands)
+
+<img src="assets/seha-demo.gif" width="560" alt="Animated Seha chat demonstration" />
+
+</div>
+
 # 🌸 Seha Personal AI — සිංහල මාර්ගෝපදේශය
 
 **Kaggle එකෙන් run කරන පුද්ගලික WhatsApp AI chat companion එක.**
