@@ -69,16 +69,19 @@ export async function startWhatsApp(db) {
     });
 
     let pairingRequested = false;
+    let pairingFailed = false;
     sock.ev.on('creds.update', saveCreds);
     sock.ev.on('connection.update', async (update) => {
       const { connection, lastDisconnect, qr } = update;
 
       // Baileys emits `qr` as the signal that the socket is ready for pairing.
       // In pairing-code mode we ignore the QR payload and request the 8-digit code.
-      if (qr && !sock.authState.creds.registered && !pairingRequested) {
+      if (qr && !state.creds.registered && !pairingRequested) {
         pairingRequested = true;
         console.log(`[Pairing] Requesting code for ${maskPhoneNumber(config.whatsappNumber)}.`);
         try {
+          // Give the connection handshake a short moment to become ready.
+          await new Promise((resolve) => setTimeout(resolve, 1500));
           const code = await sock.requestPairingCode(config.whatsappNumber);
           console.log('\n==========================================');
           console.log('       SEHA WHATSAPP PAIRING CODE');
@@ -88,7 +91,9 @@ export async function startWhatsApp(db) {
           console.log('Choose: Link a Device → Link with phone number instead');
           console.log('Enter the 8-digit code above.\n');
         } catch (error) {
-          console.error('[Pairing] Could not request a code:', error?.message || error);
+          pairingFailed = true;
+          const statusCode = error?.output?.statusCode || error?.statusCode || 'unknown';
+          console.error(`[Pairing] Could not request a code (status ${statusCode}):`, error?.message || error);
           console.error('[Pairing] Number sent to Baileys:', maskPhoneNumber(config.whatsappNumber));
           console.error('[Pairing] Check that this is the exact phone number registered to the WhatsApp account you are linking.');
           console.error('[Pairing] Sri Lanka examples accepted by this project: 0771234567, +94 77 123 4567, or 94771234567.');
