@@ -20,7 +20,7 @@
 
 [සිංහල උපදෙස්](README_SI.md) · [Features](#features) · [Kaggle setup](#run-on-kaggle) · [Commands](#commands)
 
-<img src="assets/seha-demo.gif" width="560" alt="Animated Seha chat demonstration" />
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=20&duration=3000&pause=900&color=F78DB4&center=true&vCenter=true&width=650&lines=Hello%2C+I%27m+Seha+%F0%9F%8C%B8;A+Sinhala+%26+English+WhatsApp+companion;Gemini+primary+%2B+Groq+fallback;Running+on+Kaggle" alt="Animated Seha introduction" />
 
 </div>
 
@@ -28,7 +28,7 @@
 
 ## What is Seha?
 
-Seha is a personal WhatsApp chat companion with a gentle, friendly character. It supports Sinhala and English, uses Gemini as the primary AI provider, and calls Groq only when Gemini fails. It is designed to run inside a Kaggle notebook. The project pins Baileys 6.7.24 (legacy stable line) to avoid the breaking API changes in the 7.0 release-candidate line.
+Seha is a personal WhatsApp chat companion with a gentle, friendly character. It supports Sinhala and English, uses Gemini as the primary AI provider, and calls Groq only when Gemini fails. It is designed to run inside a Kaggle notebook. The project pins Baileys 6.7.24 (legacy stable line) rather than the 7.0 release-candidate line, which introduces breaking API changes.
 
 > **Important:** This project uses Baileys, an unofficial WhatsApp Web integration. It is not the official WhatsApp Business Platform. Use a separate test number, avoid bulk messaging, and understand that unofficial automation may carry account restrictions or logout risk.
 
@@ -45,7 +45,6 @@ Seha is a personal WhatsApp chat companion with a gentle, friendly character. It
 
 ```text
 Seha-Personal-AI/
-├── assets/                 # Avatar and animated README demo
 ├── config/persona.js       # Seha's character instructions
 ├── database/               # Initial empty JSON database files
 ├── docs/                   # Privacy and usage notes
@@ -77,7 +76,7 @@ For GitHub database sync, create a fine-grained Personal Access Token with acces
 
 Open `kaggle/Seha_Kaggle_Setup.ipynb` in Kaggle, then edit the configuration cell. Add:
 
-- Owner WhatsApp number (digits only, including country code, e.g. `9477XXXXXXX`)
+- Owner WhatsApp number (Sri Lankan formats accepted: `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, or `94771234567`)
 - WhatsApp number to link (can be the same number)
 - Gemini API key
 - Groq API key (optional fallback)
@@ -87,7 +86,7 @@ The project source, README, ZIP, and default JSON files contain **no real keys, 
 
 ### 3. Run the cells in order
 
-The notebook installs Node.js 22 and FFmpeg, downloads your private repository, installs packages, creates a Kaggle-only auth folder, and starts Seha. When the eight-digit code appears:
+The notebook installs Node.js 22 and FFmpeg, downloads your GitHub repository, installs packages, creates a Kaggle-only auth folder, and starts Seha. A private repository needs a fine-grained GitHub token in the Kaggle cell to clone it. When the eight-digit code appears:
 
 1. Open WhatsApp on the phone number you entered.
 2. Go to **Settings → Linked Devices → Link a Device**.
@@ -143,7 +142,7 @@ These commands process media that is already sent to the bot or quoted in the cu
 ## Troubleshooting
 
 - **Node version error:** rerun the notebook's first setup cell; Baileys requires a modern Node.js runtime.
-- **No pairing code:** check `WHATSAPP_NUMBER` includes country code and digits only. Wait for the connection event. If already registered in the current auth folder, no new code is needed.
+- **No pairing code / invalid number:** use the exact number registered to the WhatsApp account being linked. Sri Lankan formats `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, and `94771234567` are normalized automatically. If the account is already registered in the Kaggle auth folder, a new code is not requested. An unregistered WhatsApp number cannot receive a pairing code.
 - **Gemini failed:** check your API key and current model availability. Groq is used only if a Groq key is configured and Gemini fails.
 - **GitHub sync fails:** confirm the repository is private, owner/repo names are correct, and the token has Contents read/write access.
 - **Media conversion fails:** check that the notebook installed FFmpeg and that you replied to the correct media type.
