@@ -1,0 +1,19 @@
+{
+  "name": "seha-personal-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A private Sinhala/English WhatsApp personal chat companion, designed to run from Kaggle.",
+  "type": "module",
+  "engines": { "node": ">=22.0.0" },
+  "scripts": {
+    "start": "node src/main.js",
+    "check": "node --check src/main.js && node --check src/whatsapp.js && node --check src/ai.js && node --check src/commands.js && node --check src/media.js && node --check src/database.js && node --check src/profile.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@google/genai": "^2.32.0",
+    "@whiskeysockets/baileys": "6.7.24",
+    "pino": "^9.14.0",
+    "sharp": "^0.35.4"
+  }
+}
