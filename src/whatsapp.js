@@ -3,7 +3,7 @@ import makeWASocket, {
   DisconnectReason
 } from '@whiskeysockets/baileys';
 import pino from 'pino';
-import { config } from './config.js';
+import { config, maskPhoneNumber } from './config.js';
 import { generateReply } from './ai.js';
 import { createProfile, extractProfileUpdates } from './profile.js';
 import { handleCommand, isCommand, isOwnerJid } from './commands.js';
@@ -60,42 +60,60 @@ export async function startWhatsApp(db) {
     const sock = makeWASocket({
       auth: state,
       logger: pino({ level: config.logLevel }),
-      printQRInTerminal: false,
+      // Pairing-code mode: do not print/render QR codes in Kaggle.
       syncFullHistory: false,
       markOnlineOnConnect: false,
       generateHighQualityLinkPreview: false,
-      browser: ['Seha Personal AI', 'Chrome', '1.0.0']
+      connectTimeoutMs: 60000,
+      defaultQueryTimeoutMs: 60000
     });
 
     let pairingRequested = false;
     sock.ev.on('creds.update', saveCreds);
     sock.ev.on('connection.update', async (update) => {
       const { connection, lastDisconnect, qr } = update;
-      if (qr && !state.creds.registered && !pairingRequested) {
+
+      // Baileys emits `qr` as the signal that the socket is ready for pairing.
+      // In pairing-code mode we ignore the QR payload and request the 8-digit code.
+      if (qr && !sock.authState.creds.registered && !pairingRequested) {
         pairingRequested = true;
+        console.log(`[Pairing] Requesting code for ${maskPhoneNumber(config.whatsappNumber)}.`);
         try {
           const code = await sock.requestPairingCode(config.whatsappNumber);
           console.log('\n==========================================');
-          console.log('  SEHA WHATSAPP PAIRING CODE');
-          console.log(`  ${code}`);
-          console.log('  WhatsApp → Linked Devices → Link with phone number');
-          console.log('==========================================\n');
+          console.log('       SEHA WHATSAPP PAIRING CODE');
+          console.log(`                 ${code}`);
+          console.log('==========================================');
+          console.log('Phone: WhatsApp → Settings → Linked Devices');
+          console.log('Choose: Link a Device → Link with phone number instead');
+          console.log('Enter the 8-digit code above.\n');
         } catch (error) {
-          console.error('[WhatsApp] Could not request pairing code:', error.message);
-          pairingRequested = false;
+          console.error('[Pairing] Could not request a code:', error?.message || error);
+          console.error('[Pairing] Number sent to Baileys:', maskPhoneNumber(config.whatsappNumber));
+          console.error('[Pairing] Check that this is the exact phone number registered to the WhatsApp account you are linking.');
+          console.error('[Pairing] Sri Lanka examples accepted by this project: 0771234567, +94 77 123 4567, or 94771234567.');
+          console.error('[Pairing] Do not repeatedly retry; restart the Kaggle session after correcting the number.');
         }
       }
+
+      if (connection === 'connecting') console.log('[WhatsApp] Connecting...');
       if (connection === 'open') console.log('✅ Seha connected to WhatsApp.');
       if (connection === 'close') {
         const statusCode = lastDisconnect?.error?.output?.statusCode;
-        console.warn(`[WhatsApp] Connection closed (${statusCode || 'unknown'}).`);
+        const detail = lastDisconnect?.error?.message || 'No additional detail';
+        console.warn(`[WhatsApp] Connection closed (${statusCode || 'unknown'}): ${detail}`);
+
         if (statusCode === DisconnectReason.loggedOut) {
           stopped = true;
-          console.error('This WhatsApp session was logged out. Delete the auth folder and pair again.');
+          console.error('[WhatsApp] Session was logged out. Remove the Kaggle auth folder and pair again.');
           return;
         }
+
         clearTimeout(reconnectTimer);
-        reconnectTimer = setTimeout(() => connect().catch((error) => console.error('[WhatsApp] Reconnect failed:', error)), 5000);
+        reconnectTimer = setTimeout(
+          () => connect().catch((error) => console.error('[WhatsApp] Reconnect failed:', error)),
+          5000
+        );
       }
     });
 
@@ -170,7 +188,6 @@ async function processIncoming({ sock, message, db, deduper }) {
     profile = { ...profile, ...updates, updatedAt: new Date().toISOString() };
     await db.setUser(senderJid, profile);
   }
-
 
   try {
     const answer = await generateReply({
