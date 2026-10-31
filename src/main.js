@@ -10,11 +10,8 @@ async function main() {
     token: config.githubToken
   }).init();
 
-  if (!db.remoteEnabled) {
-    console.warn('[DB] GitHub sync is OFF. Profiles/settings will be stored only in this Kaggle session.');
-  } else {
-    console.log(`[DB] GitHub JSON sync enabled: ${config.githubOwner}/${config.githubRepo}`);
-  }
+  console.log(`[DB] GitHub-only profile/settings storage: ${config.githubOwner}/${config.githubRepo}`);
+  console.log('[DB] Profile and settings data are never written to Kaggle files.');
 
   console.log('🌸 Starting Seha Personal AI...');
   console.log(`Gemini: ${config.geminiApiKey ? config.geminiModel : 'not configured'}`);
