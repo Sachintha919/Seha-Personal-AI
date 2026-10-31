@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=25D366&height=200&section=header&text=WhatsApp%20AI%20Bot&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=සචින්ත%20ලක්ෂාන්ගේ%20පෞද්ගලික%20AI%20Assistant&descAlignY=55&descAlign=50" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=25D366&height=200&section=header&text=WhatsApp%20AI%20Bot&fontSize=50&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=ඔයාගේ%20පෞද්ගලික%20AI%20සහකාරිය%20(Assistant)&descAlignY=55&descAlign=50" width="100%"/>
 
 <a href="https://imgbb.com/">
   <img src="https://i.ibb.co/SDq9xcq1/seha-avatar.png"
