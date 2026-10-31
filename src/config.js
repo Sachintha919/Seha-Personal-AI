@@ -11,6 +11,11 @@ export function normalizePhoneNumber(value = '', defaultCountryCode = '94') {
 
   if (digits.startsWith('00')) digits = digits.slice(2);
 
+  // Accept +94 0XX XXX XXXX by removing the national trunk zero after +94.
+  if (countryCode === '94' && digits.startsWith('940') && digits.length === 12) {
+    digits = `94${digits.slice(3)}`;
+  }
+
   // Sri Lanka: national format 0XXXXXXXXX (10 digits) -> 94XXXXXXXXX.
   if (countryCode === '94' && digits.length === 10 && digits.startsWith('0')) {
     digits = `${countryCode}${digits.slice(1)}`;
