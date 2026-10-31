@@ -4,7 +4,8 @@ node_modules/
 !.env.example
 auth_info/
 seha-auth/
-/kaggle/
+/kaggle/working/
+/kaggle/.ipynb_checkpoints/
 /tmp/
 media-temp/
 *.log
