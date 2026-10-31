@@ -111,9 +111,13 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 - Chat messages / history එක save කරන්නේ නැහැ.
 - `.forgetme` යැව්වොත් ඔයාගේ profile එක මකනවා.
 
-## GitHub database එක
+## GitHub database එක — GitHub පමණයි
 
-GitHub sync එක active වෙන්නේ `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_TOKEN` තුනම ලබා දුන්නොත් විතරයි. එවිට profile/settings වෙනස් වුණාම පමණක් `database/users.json` හෝ `database/settings.json` update වෙනවා. Token එකක් නැත්නම් Kaggle session එකේ local database එක පමණක් භාවිතා වෙනවා; session එක අවසන් වුණාම ඒ data නැතිවෙන්න පුළුවන්.
+මේ project එකේ user profiles සහ bot settings save වෙන්නේ GitHub repository එකේ `database/users.json` සහ `database/settings.json` files දෙකේ පමණයි. Kaggle disk එකට ඒවා write කරන්නේ නැහැ. Kaggle notebook එක GitHub repository එක clone කළාට පස්සේ එම JSON files දෙක local copy එකෙන් මකා දමනවා. Bot එක data කියවන්නේ සහ update කරන්නේ GitHub API එකෙන් විතරයි.
+
+`GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_TOKEN` තුනම අනිවාර්යයි. Token එකට මේ repository එකේ `Contents: Read and write` permission දෙන්න. GitHub API එක වැඩ නොකළොත් හෝ permission ප්‍රමාණවත් නැත්නම් local database එකකට fallback වෙන්නේ නැහැ; save එක fail වුණා කියලා පෙන්වනවා.
+
+**සටහන:** දැනට repository එක Public. එහි save කරන profile/settings JSON files වෙනත් අයටත් බලන්න පුළුවන්. මේක ඔයා ඉල්ලූ one-time test setup එකට එහෙම configure කරලා තියෙනවා.
 
 ## Kaggle session එක අවසන් වුණොත්?
 
