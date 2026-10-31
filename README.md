@@ -130,7 +130,7 @@ Owner commands are authenticated using the sender's WhatsApp number, not their d
 - A compact profile may contain WhatsApp ID, display name, chosen name, age, and location/from-where if explicitly shared by that contact.
 - `.forgetme` deletes the sender's profile.
 - **Profiles and settings are GitHub-only.** The application reads and writes `database/users.json` and `database/settings.json` through the GitHub API. It never writes those records to Kaggle files.
-- The Kaggle notebook deletes the cloned JSON database snapshots immediately after downloading the repository, before Seha starts. Data is held in memory only while the process runs.
+- The cloned `database/users.json` and `database/settings.json` files remain in the Kaggle project folder. They are not used for runtime storage: the bot reads and writes profile/settings data through GitHub API only. Data is held in process memory while running.
 - When GitHub is unavailable or the token lacks permission, saving fails; the bot does not use local storage.
 - The current repository is public, so profiles/settings JSON files committed there can be viewed by anyone. This is the requested one-time test setup.
 - The WhatsApp pairing session stays under the Kaggle working directory and is excluded by `.gitignore`.
