@@ -1,6 +1,11 @@
 <div align="center">
 
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/SDq9xcq1/seha-avatar.png" alt="seha avatar" border="0"></a>" width="132" alt="Seha avatar" />
+<a href="https://imgbb.com/">
+  <img src="https://i.ibb.co/SDq9xcq1/seha-avatar.png"
+       alt="Seha avatar"
+       width="132"
+       border="0">
+</a>
 
 # 🌸 Seha Personal AI
 
