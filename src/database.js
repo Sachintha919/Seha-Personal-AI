@@ -24,6 +24,7 @@ export class JsonDatabase {
 
   async init() {
     await fs.mkdir(this.baseDir, { recursive: true });
+    if (this.remoteEnabled) await this.verifyPrivateRepository();
     const [users, settings] = await Promise.all([
       this.readFile('users.json', {}),
       this.readFile('settings.json', DEFAULT_SETTINGS)
@@ -40,6 +41,22 @@ export class JsonDatabase {
       'X-GitHub-Api-Version': '2022-11-28',
       'Content-Type': 'application/json'
     };
+  }
+
+  async verifyPrivateRepository() {
+    try {
+      const url = `https://api.github.com/repos/${this.owner}/${this.repo}`;
+      const response = await fetch(url, { headers: this.getHeaders() });
+      if (!response.ok) throw new Error(`Repository check failed (${response.status}).`);
+      const repository = await response.json();
+      if (repository.private !== true) {
+        this.remoteEnabled = false;
+        console.warn('[DB] GitHub JSON sync disabled: the repository is public. Make it private before storing user profiles.');
+      }
+    } catch (error) {
+      this.remoteEnabled = false;
+      console.warn(`[DB] GitHub JSON sync disabled because repository privacy could not be verified: ${error.message}`);
+    }
   }
 
   async readFile(filename, fallback) {
@@ -120,8 +137,8 @@ export class JsonDatabase {
     const next = { ...this.cache.settings, ...patch };
     if (JSON.stringify(next) === JSON.stringify(this.cache.settings)) return false;
     this.cache.settings = next;
-    await this.writeFile('settings.json', next);
-    return true;
+    const saved = await this.writeFile('settings.json', next);
+    return saved !== false;
   }
 
   async setUser(id, profile) {
@@ -129,14 +146,14 @@ export class JsonDatabase {
     const previous = this.cache.users[id];
     if (JSON.stringify(previous) === JSON.stringify(profile)) return false;
     this.cache.users[id] = profile;
-    await this.writeFile('users.json', this.cache.users);
-    return true;
+    const saved = await this.writeFile('users.json', this.cache.users);
+    return saved !== false;
   }
 
   async deleteUser(id) {
     if (!id || !this.cache.users[id]) return false;
     delete this.cache.users[id];
-    await this.writeFile('users.json', this.cache.users);
-    return true;
+    const saved = await this.writeFile('users.json', this.cache.users);
+    return saved !== false;
   }
 }
