@@ -109,7 +109,7 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 
 ## GitHub database එක — GitHub පමණයි
 
-මේ project එකේ user profiles සහ bot settings save වෙන්නේ GitHub repository එකේ `database/users.json` සහ `database/settings.json` files දෙකේ පමණයි. Kaggle disk එකට ඒවා write කරන්නේ නැහැ. Kaggle notebook එක GitHub repository එක clone කළාට පස්සේ එම JSON files දෙක local copy එකෙන් මකා දමනවා. Bot එක data කියවන්නේ සහ update කරන්නේ GitHub API එකෙන් විතරයි.
+මේ project එකේ user profiles සහ bot settings save වෙන්නේ GitHub repository එකේ `database/users.json` සහ `database/settings.json` files දෙකේ පමණයි. Kaggle disk එකට ඒවා write කරන්නේ නැහැ. Kaggle notebook එක GitHub repository එක clone කළාට පස්සේ JSON files දෙක local copy එකේ තිබෙන්න ඉඩ දෙනවා. නමුත් bot එක ඒවා local විදිහට භාවිතා කරන්නේ නැහැ. Data කියවන්නේ සහ update කරන්නේ GitHub API එකෙන් විතරයි.
 
 `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_TOKEN` තුනම අනිවාර්යයි. Token එකට මේ repository එකේ `Contents: Read and write` permission දෙන්න. GitHub API එක වැඩ නොකළොත් හෝ permission ප්‍රමාණවත් නැත්නම් local database එකකට fallback වෙන්නේ නැහැ; save එක fail වුණා කියලා පෙන්වනවා.
 
