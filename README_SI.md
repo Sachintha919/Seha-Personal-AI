@@ -45,7 +45,7 @@ Seha කියන්නේ Sinhala/English දෙකෙන්ම ස්වභා
 5. Extract කළ folder එක ඇතුළේ තියෙන files GitHub repository එකට upload කරන්න.
 6. ZIP file එකම upload කරන්න එපා; ZIP එක ඇතුළේ තියෙන files/folders upload කරන්න.
 
-GitHub JSON database එකත් use කරනවා නම්, ඒ repository එකට පමණක් access තියෙන Fine-grained Personal Access Token එකක් හදන්න. `Contents: Read and write` permission දෙන්න. Token එක notebook cell එකට දාන්න; source code එකට හෝ GitHub එකට දාන්න එපා.
+User profiles සහ settings GitHub එකේම save වෙන නිසා Fine-grained Personal Access Token එකක් අනිවාර්යයි. ඒ token එකට මේ repository එකේ `Contents: Read and write` permission දෙන්න. Token එක Kaggle notebook cell එකට විතරක් දාන්න; source code එකට හෝ GitHub එකට upload කරන්න එපා.
 
 ## පියවර 2 — Kaggle notebook එක open කරන්න
 
@@ -57,7 +57,7 @@ Project එකේ `kaggle/Seha_Kaggle_Setup.ipynb` file එක Kaggle notebook �
 - `GROQ_API_KEY`: fallback key එක. නැත්නම් හිස්ව තබන්න.
 - `GITHUB_OWNER`: GitHub username එක.
 - `GITHUB_REPO`: repository name එක.
-- `GITHUB_TOKEN`: GitHub token එක. GitHub database sync ඕන නැත්නම් හිස්ව තබන්න.
+- `GITHUB_TOKEN`: GitHub token එක. මේක අනිවාර්යයි; profile/settings GitHub එකේ save කිරීමට `Contents: Read and write` permission අවශ්‍යයි.
 
 **මේ project ZIP එක තුළ කිසිම සැබෑ API key, phone number, GitHub token හෝ WhatsApp session එකක් නැහැ.** ඔයාගේ values Kaggle notebook cell එකේම දාන්න.
 
@@ -117,7 +117,7 @@ GitHub sync එක active වෙන්නේ `GITHUB_OWNER`, `GITHUB_REPO`, `GIT
 
 ## Kaggle session එක අවසන් වුණොත්?
 
-Kaggle session එක ස්ථිර server එකක් නෙවෙයි. Session එක stop/expire වුණොත් notebook එක නැවත run කරන්න වෙනවා. WhatsApp session credentials GitHub එකට upload නොකරන නිසා Kaggle working storage එක reset වුණොත් නැවත pairing කරන්න සිදුවිය හැකියි.
+Kaggle session එක stop/expire වුණොත් notebook එක නැවත run කරන්න වෙනවා. User profiles/settings GitHub එකේ තිබෙන නිසා ඒවා Kaggle reset වුණත් ඉතිරි වෙනවා. WhatsApp pairing session credentials විතරක් Kaggle working storage එකේ තබනවා; ඒවා reset වුණොත් නැවත pairing කරන්න සිදුවිය හැකියි.
 
 ## Media ගැන සීමාව
 
