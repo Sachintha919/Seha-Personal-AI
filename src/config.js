@@ -78,7 +78,7 @@ export function validateConfig() {
     throw new Error('Add at least one AI API key in the Kaggle configuration cell: GEMINI_API_KEY or GROQ_API_KEY.');
   }
 
-  if (config.githubToken && (!config.githubOwner || !config.githubRepo)) {
-    throw new Error('For GitHub database sync, set GITHUB_OWNER and GITHUB_REPO as well as GITHUB_TOKEN.');
+  if (!config.githubOwner || !config.githubRepo || !config.githubToken) {
+    throw new Error('GitHub-only profile storage is enabled. Set GITHUB_OWNER, GITHUB_REPO, and GITHUB_TOKEN in the Kaggle configuration cell.');
   }
 }
