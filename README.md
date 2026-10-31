@@ -36,7 +36,7 @@ Seha is a personal WhatsApp chat companion with a gentle, friendly character. It
 
 - **Natural chat:** no stored chat history; each AI request includes only the current message, Seha's persona, language setting, and a few relevant profile facts.
 - **Automatic profile notes:** stores a contact's display name by default, and updates name/age/location only when the person explicitly shares first-person details.
-- **GitHub JSON storage:** optional read/write sync to `database/users.json` and `database/settings.json` in your private repository. Writes happen only when a profile or setting changes.
+- **GitHub-only JSON storage:** profiles and settings are read from and written directly to `database/users.json` and `database/settings.json` in GitHub. They are never persisted to Kaggle files. Writes happen only when a profile or setting changes.
 - **Owner controls:** private chats, groups, owner-only mode, welcome message, global reply language, and status.
 - **Media tools:** create a static WebP sticker from a replied image; convert replied audio/video to MP3; convert replied video to MP4.
 - **Pairing code:** connect by the eight-digit phone-number pairing code instead of scanning a QR.
@@ -46,14 +46,14 @@ Seha is a personal WhatsApp chat companion with a gentle, friendly character. It
 ```text
 Seha-Personal-AI/
 ├── config/persona.js       # Seha's character instructions
-├── database/               # Initial empty JSON database files
+├── database/               # GitHub JSON data files; remote-only at runtime
 ├── docs/                   # Privacy and usage notes
 ├── kaggle/                 # Ready-to-edit Kaggle notebook
 ├── src/
 │   ├── ai.js               # Gemini primary + Groq fallback
 │   ├── commands.js         # User and owner commands
 │   ├── config.js            # Reads Kaggle environment variables
-│   ├── database.js          # Local + GitHub JSON storage
+│   ├── database.js          # GitHub-only JSON storage; no local fallback
 │   ├── main.js              # Application entry point
 │   ├── media.js             # Sticker / MP3 / MP4 processing
 │   ├── profile.js           # Minimal profile extraction
@@ -68,9 +68,9 @@ Seha-Personal-AI/
 
 ### 1. Create a private GitHub repository
 
-Create a new repository named `Seha-Personal-AI` and set it to **Private**. Upload the contents of this project ZIP to the repository (upload the files inside the folder, not the ZIP itself).
+Use your existing `Sachintha919/Seha-Personal-AI` repository, or create one named `Seha-Personal-AI`. Upload the contents of this project ZIP to the repository (upload the files inside the folder, not the ZIP itself).
 
-For GitHub database sync, create a fine-grained Personal Access Token with access to only this repository and **Contents: Read and write** permission. The token is entered only in the Kaggle notebook cell; it is not included in this project.
+GitHub storage is mandatory. Create a fine-grained Personal Access Token with access to this repository and **Contents: Read and write** permission. Enter it only in the Kaggle notebook cell; it is not included in this project. This project stores profiles and settings on GitHub even when the repository is public, so those JSON records are publicly viewable.
 
 ### 2. Open the included notebook
 
@@ -86,7 +86,7 @@ The project source, README, ZIP, and default JSON files contain **no real keys, 
 
 ### 3. Run the cells in order
 
-The notebook installs Node.js 22 and FFmpeg, downloads your GitHub repository, installs packages, creates a Kaggle-only auth folder, and starts Seha. A private repository needs a fine-grained GitHub token in the Kaggle cell to clone it. When the eight-digit code appears:
+The notebook installs Node.js 22 and FFmpeg, downloads your GitHub repository, installs packages, creates a Kaggle-only auth folder, and starts Seha. A GitHub token is required in the Kaggle cell for the Contents API to read and write the database; it also allows cloning a private repository. When the eight-digit code appears:
 
 1. Open WhatsApp on the phone number you entered.
 2. Go to **Settings → Linked Devices → Link a Device**.
@@ -129,8 +129,10 @@ Owner commands are authenticated using the sender's WhatsApp number, not their d
 - No full chat history is saved or sent to the AI provider.
 - A compact profile may contain WhatsApp ID, display name, chosen name, age, and location/from-where if explicitly shared by that contact.
 - `.forgetme` deletes the sender's profile.
-- GitHub sync is optional. Without a GitHub token, data stays in the Kaggle session's local `database/` folder and may be lost when the session ends.
-- Use a **private** repository. A private GitHub database is still personal data; protect repository access and tokens.
+- **Profiles and settings are GitHub-only.** The application reads and writes `database/users.json` and `database/settings.json` through the GitHub API. It never writes those records to Kaggle files.
+- The Kaggle notebook deletes the cloned JSON database snapshots immediately after downloading the repository, before Seha starts. Data is held in memory only while the process runs.
+- When GitHub is unavailable or the token lacks permission, saving fails; the bot does not use local storage.
+- The current repository is public, so profiles/settings JSON files committed there can be viewed by anyone. This is the requested one-time test setup.
 - The WhatsApp pairing session stays under the Kaggle working directory and is excluded by `.gitignore`.
 
 Read [docs/PRIVACY.md](docs/PRIVACY.md) before using it with other people's chats.
@@ -144,7 +146,7 @@ These commands process media that is already sent to the bot or quoted in the cu
 - **Node version error:** rerun the notebook's first setup cell; Baileys requires a modern Node.js runtime.
 - **No pairing code / invalid number:** use the exact number registered to the WhatsApp account being linked. Sri Lankan formats `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, and `94771234567` are normalized automatically. If the account is already registered in the Kaggle auth folder, a new code is not requested. An unregistered WhatsApp number cannot receive a pairing code.
 - **Gemini failed:** check your API key and current model availability. Groq is used only if a Groq key is configured and Gemini fails.
-- **GitHub sync fails:** confirm the repository is private, owner/repo names are correct, and the token has Contents read/write access.
+- **GitHub storage fails:** confirm owner/repo names and that the token has Contents read/write permission for this repository.
 - **Media conversion fails:** check that the notebook installed FFmpeg and that you replied to the correct media type.
 
 ## Current project boundary
