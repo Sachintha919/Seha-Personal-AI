@@ -20,7 +20,7 @@
 
 [සිංහල උපදෙස්](README_SI.md) · [Features](#features) · [Kaggle setup](#run-on-kaggle) · [Commands](#commands)
 
-<img src="assets/seha-demo.gif" width="560" alt="Animated Seha chat demonstration" />
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=20&duration=3000&pause=900&color=F78DB4&center=true&vCenter=true&width=650&lines=Hello%2C+I%27m+Seha+%F0%9F%8C%B8;Sinhala+%26+English+WhatsApp+companion;Running+on+Kaggle" alt="Animated Seha introduction" />
 
 </div>
 
@@ -38,12 +38,8 @@ Seha කියන්නේ Sinhala/English දෙකෙන්ම ස්වභා
 
 ## පියවර 1 — ZIP එක download කරලා GitHub එකට දාන්න
 
-1. `Seha-Personal-AI.zip` extract කරන්න.
-2. GitHub එකට ගිහින් `New repository` තෝරන්න.
-3. Repository name එක `Seha-Personal-AI` දෙන්න.
-4. **Private** තෝරන්න.
-5. Extract කළ folder එක ඇතුළේ තියෙන files GitHub repository එකට upload කරන්න.
-6. ZIP file එකම upload කරන්න එපා; ZIP එක ඇතුළේ තියෙන files/folders upload කරන්න.
+1. ඔයාගේ දැනට තියෙන `Sachintha919/Seha-Personal-AI` GitHub repository එක භාවිතා කරන්න.
+2. Full project ZIP එක extract කරලා, files/folders repository එකට upload කරලා updates commit කරන්න. ZIP file එකම upload කරන්න එපා.
 
 User profiles සහ settings GitHub එකේම save වෙන නිසා Fine-grained Personal Access Token එකක් අනිවාර්යයි. ඒ token එකට මේ repository එකේ `Contents: Read and write` permission දෙන්න. Token එක Kaggle notebook cell එකට විතරක් දාන්න; source code එකට හෝ GitHub එකට upload කරන්න එපා.
 
