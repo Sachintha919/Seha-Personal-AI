@@ -66,9 +66,9 @@ Seha-Personal-AI/
 
 ## Run on Kaggle
 
-### 1. Create a private GitHub repository
+### 1. Use your GitHub repository
 
-Use your existing `Sachintha919/Seha-Personal-AI` repository, or create one named `Seha-Personal-AI`. Upload the contents of this project ZIP to the repository (upload the files inside the folder, not the ZIP itself).
+Use your existing `Sachintha919/Seha-Personal-AI` repository. Upload the contents of this project ZIP to it (upload the files inside the folder, not the ZIP itself).
 
 GitHub storage is mandatory. Create a fine-grained Personal Access Token with access to this repository and **Contents: Read and write** permission. Enter it only in the Kaggle notebook cell; it is not included in this project. This project stores profiles and settings on GitHub even when the repository is public, so those JSON records are publicly viewable.
 
