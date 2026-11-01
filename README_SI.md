@@ -32,7 +32,7 @@
 
 ## මේ project එකෙන් මොනවාද වෙන්නේ?
 
-Seha කියන්නේ Sinhala/English දෙකෙන්ම ස්වභාවිකව කතා කරන WhatsApp bot එකක්. Gemini primary AI එක. Gemini එක fail වුණොත් විතරක් Groq fallback එක භාවිතා කරනවා. Chat history එක save කරන්නේ නැහැ. User තමන් ගැන පැහැදිලිව කියන නම/වයස/ප්‍රදේශය වගේ කුඩා profile facts විතරයි save කරන්නේ. Baileys 6.7.24 legacy stable version එක භාවිතා කරනවා. v7 release-candidate එකේ breaking API changes තිබෙන නිසා මේ project එකට එය තෝරාගෙන නැහැ.
+Seha කියන්නේ Sinhala/English දෙකෙන්ම ස්වභාවිකව කතා කරන WhatsApp bot එකක්. Gemini primary AI එක. Gemini එක fail වුණොත් විතරක් Groq fallback එක භාවිතා කරනවා. Chat history එක save කරන්නේ නැහැ. User තමන් ගැන පැහැදිලිව කියන නම/වයස/ප්‍රදේශය වගේ කුඩා profile facts විතරයි save කරන්නේ. Baileys 6.7.24 code line එකට අදාළ LID/PN decryption retry fix එකක් සහිත community build එකක් භාවිතා කරනවා. එය `c82d22d22ee01db739b781e1df064f019bff94e5` commit එකට pin කරලා තියෙනවා. මේ fix එක තවම official Baileys release එකට merge කරලා නැති නිසා තාවකාලික GitHub build එකක් ලෙස සලකන්න. [අදාළ PR එක මෙතැනින් බලන්න](https://github.com/WhiskeySockets/Baileys/pull/2763).
 
 **වැදගත්:** Baileys කියන්නේ unofficial WhatsApp Web library එකක්. WhatsApp එකේ official Business API එකක් නෙවෙයි. Separate test number එකක් භාවිතා කරන්න. Spam/bulk messaging කරන්න එපා. Account logout/restriction risk එකක් තියෙන්න පුළුවන්.
 
@@ -115,7 +115,7 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 
 **සටහන:** දැනට repository එක Public. එහි save කරන profile/settings JSON files වෙනත් අයටත් බලන්න පුළුවන්. මේක ඔයා ඉල්ලූ one-time test setup එකට එහෙම configure කරලා තියෙනවා.
 
-## Kaggle session එක අවසන් වුණොත්?
+## LID / Bad MAC error එකක් ආවොත්?\n\nමේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.\n\n## Kaggle session එක අවසන් වුණොත්?
 
 Kaggle session එක stop/expire වුණොත් notebook එක නැවත run කරන්න වෙනවා. User profiles/settings GitHub එකේ තිබෙන නිසා ඒවා Kaggle reset වුණත් ඉතිරි වෙනවා. WhatsApp pairing session credentials විතරක් Kaggle working storage එකේ තබනවා; ඒවා reset වුණොත් නැවත pairing කරන්න සිදුවිය හැකියි.
 
