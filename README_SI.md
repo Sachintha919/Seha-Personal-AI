@@ -115,7 +115,9 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 
 **සටහන:** දැනට repository එක Public. එහි save කරන profile/settings JSON files වෙනත් අයටත් බලන්න පුළුවන්. මේක ඔයා ඉල්ලූ one-time test setup එකට එහෙම configure කරලා තියෙනවා.
 
-## LID / Bad MAC error එකක් ආවොත්?\n\nමේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.\n\n## Kaggle session එක අවසන් වුණොත්?
+## LID / Bad MAC error එකක් ආවොත්?\n\nමේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.
+
+## Kaggle session එක අවසන් වුණොත්?
 
 Kaggle session එක stop/expire වුණොත් notebook එක නැවත run කරන්න වෙනවා. User profiles/settings GitHub එකේ තිබෙන නිසා ඒවා Kaggle reset වුණත් ඉතිරි වෙනවා. WhatsApp pairing session credentials විතරක් Kaggle working storage එකේ තබනවා; ඒවා reset වුණොත් නැවත pairing කරන්න සිදුවිය හැකියි.
 
