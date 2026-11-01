@@ -28,7 +28,7 @@
 
 ## What is Seha?
 
-Seha is a personal WhatsApp chat companion with a gentle, friendly character. It supports Sinhala and English, uses Gemini as the primary AI provider, and calls Groq only when Gemini fails. It is designed to run inside a Kaggle notebook. The project pins Baileys 6.7.24 (legacy stable line) rather than the 7.0 release-candidate line, which introduces breaking API changes.
+Seha is a personal WhatsApp chat companion with a gentle, friendly character. It supports Sinhala and English, uses Gemini as the primary AI provider, and calls Groq only when Gemini fails. It is designed to run inside a Kaggle notebook. The project uses the Baileys 6.7.24 code line with a pinned community LID/PN decryption-retry fix (`c82d22d22ee01db739b781e1df064f019bff94e5`). This is a temporary GitHub-sourced build because the fix has not been merged into the official Baileys release line; review the [fix PR](https://github.com/WhiskeySockets/Baileys/pull/2763) before changing this pin.
 
 > **Important:** This project uses Baileys, an unofficial WhatsApp Web integration. It is not the official WhatsApp Business Platform. Use a separate test number, avoid bulk messaging, and understand that unofficial automation may carry account restrictions or logout risk.
 
@@ -144,7 +144,7 @@ These commands process media that is already sent to the bot or quoted in the cu
 ## Troubleshooting
 
 - **Node version error:** rerun the notebook's first setup cell; Baileys requires a modern Node.js runtime.
-- **No pairing code / invalid number:** use the exact number registered to the WhatsApp account being linked. Sri Lankan formats `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, and `94771234567` are normalized automatically. If the account is already registered in the Kaggle auth folder, a new code is not requested. An unregistered WhatsApp number cannot receive a pairing code.
+- **LID / Bad MAC errors:** this build retries decryption with the alternate PN/LID identity only when WhatsApp includes that paired identity in the encrypted-message stanza. If errors continue, the stanza may not include an alternate identity or there may be a separate WhatsApp/network initialization timeout; save the full fresh log for diagnosis.\n- **No pairing code / invalid number:** use the exact number registered to the WhatsApp account being linked. Sri Lankan formats `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, and `94771234567` are normalized automatically. If the account is already registered in the Kaggle auth folder, a new code is not requested. An unregistered WhatsApp number cannot receive a pairing code.
 - **Gemini failed:** check your API key and current model availability. Groq is used only if a Groq key is configured and Gemini fails.
 - **GitHub storage fails:** confirm owner/repo names and that the token has Contents read/write permission for this repository.
 - **Media conversion fails:** check that the notebook installed FFmpeg and that you replied to the correct media type.
