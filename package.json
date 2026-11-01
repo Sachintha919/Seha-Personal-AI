@@ -1,6 +1,6 @@
 {
   "name": "seha-personal-ai",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "A private Sinhala/English WhatsApp personal chat companion, designed to run from Kaggle.",
   "type": "module",
@@ -9,12 +9,12 @@
   },
   "scripts": {
     "start": "node src/main.js",
-    "check": "node --check src/main.js && node --check src/whatsapp.js && node --check src/ai.js && node --check src/commands.js && node --check src/media.js && node --check src/database.js && node --check src/profile.js && node --check src/config.js && node --check tests/config.test.js && node --check tests/profile.test.js && node --check tests/database.test.js",
+    "check": "node --check src/main.js && node --check src/whatsapp.js && node --check src/ai.js && node --check src/commands.js && node --check src/media.js && node --check src/database.js && node --check src/profile.js && node --check src/config.js && node --check tests/config.test.js && node --check tests/profile.test.js && node --check tests/database.test.js && node --check tests/whatsapp.test.js",
     "test": "node --test"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
-    "@whiskeysockets/baileys": "6.7.24",
+    "@whiskeysockets/baileys": "github:daniel-n-silva/Baileys#c82d22d22ee01db739b781e1df064f019bff94e5",
     "pino": "^9.14.0",
     "sharp": "^0.35.5"
   }
