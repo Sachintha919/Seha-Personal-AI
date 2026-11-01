@@ -1,6 +1,7 @@
 import makeWASocket, {
   useMultiFileAuthState,
-  DisconnectReason
+  DisconnectReason,
+  fetchLatestWaWebVersion
 } from '@whiskeysockets/baileys';
 import pino from 'pino';
 import { config, maskPhoneNumber } from './config.js';
@@ -43,6 +44,26 @@ export function getSender(message) {
   return key.senderPn || key.remoteJidAlt || jid;
 }
 
+function jidUser(jid = '') {
+  return String(jid).split('@')[0].split(':')[0];
+}
+
+export function isSelfChatJid(jid = '', me = {}) {
+  const user = jidUser(jid);
+  if (!user) return false;
+  return [me?.id, me?.jid, me?.lid]
+    .filter(Boolean)
+    .some((identity) => jidUser(identity) === user);
+}
+
+export function isOwnerSelfCommand(message, me = {}) {
+  return Boolean(
+    message?.key?.fromMe
+    && isSelfChatJid(message.key.remoteJid || '', me)
+    && isCommand(extractText(message))
+  );
+}
+
 function getDisplayName(message, senderJid) {
   return String(message.pushName || senderJid.split('@')[0] || 'Friend').slice(0, 60);
 }
@@ -60,19 +81,37 @@ export async function startWhatsApp(db) {
   const deduper = new Deduper();
   let reconnectTimer = null;
   let stopped = false;
+  let waVersion = null;
 
   const connect = async () => {
     if (stopped) return;
     const { state, saveCreds } = await useMultiFileAuthState(config.authDir);
+
+    // Use the current WhatsApp Web client revision instead of the old
+    // revision bundled with legacy Baileys. Reuse it on reconnects.
+    if (!waVersion) {
+      const versionResult = await fetchLatestWaWebVersion({ timeout: 15000 });
+      waVersion = versionResult.version;
+      if (versionResult.isLatest) {
+        console.log(`[WhatsApp] Using current WhatsApp Web version: ${waVersion.join('.')}`);
+      } else {
+        console.warn('[WhatsApp] Could not fetch current WhatsApp Web version; using Baileys fallback:', versionResult.error?.message || 'unknown error');
+      }
+    }
+
     const sock = makeWASocket({
       auth: state,
+      version: waVersion,
       logger: pino({ level: config.logLevel }),
       // Pairing-code mode: do not print/render QR codes in Kaggle.
       syncFullHistory: false,
       markOnlineOnConnect: false,
       generateHighQualityLinkPreview: false,
       connectTimeoutMs: 60000,
-      defaultQueryTimeoutMs: 60000
+      defaultQueryTimeoutMs: 60000,
+      // These optional queries (props, blocklist, privacy settings) can time
+      // out on Kaggle and are not required for basic message receive/reply.
+      fireInitQueries: false
     });
 
     let pairingRequested = false;
@@ -133,7 +172,13 @@ export async function startWhatsApp(db) {
       if (type !== 'notify') return;
       for (const message of messages || []) {
         try {
-          await processIncoming({ sock, message, db, deduper });
+          await processIncoming({
+            sock,
+            message,
+            db,
+            deduper,
+            me: state.creds.me || sock.user
+          });
         } catch (error) {
           console.error('[Message handler]', error);
         }
@@ -144,30 +189,42 @@ export async function startWhatsApp(db) {
   await connect();
 }
 
-async function processIncoming({ sock, message, db, deduper }) {
-  if (!message?.key || message.key.fromMe) return;
+async function processIncoming({ sock, message, db, deduper, me }) {
+  if (!message?.key) return;
   const jid = message.key.remoteJid || '';
   if (!jid || jid === 'status@broadcast' || jid.endsWith('@broadcast')) return;
-  const senderJid = getSender(message);
+
+  const text = extractText(message);
+  const ownerSelfCommand = isOwnerSelfCommand(message, me);
+  // Outgoing messages are normally ignored to prevent reply loops. The only
+  // exception is an explicit dot-command typed in the linked account's own
+  // self-chat, which is a convenient way for the owner to control Seha.
+  if (message.key.fromMe && !ownerSelfCommand) return;
+
+  const senderJid = ownerSelfCommand
+    ? `${config.ownerNumber}@s.whatsapp.net`
+    : getSender(message);
   if (!senderJid) return;
+  if (!text) return;
+
   const messageId = message.key.id;
   if (messageId && deduper.has(messageId)) return;
   if (messageId) deduper.add(messageId);
 
   const isGroup = jid.endsWith('@g.us');
-  const owner = isOwnerJid(senderJid);
+  const owner = ownerSelfCommand || isOwnerJid(senderJid);
   const settings = db.settings;
   if (settings.onlyMe && !owner) return;
 
-  const text = extractText(message);
-  if (!text) return;
   const ownerCommand = owner && /^\.owner\b/i.test(text);
   if (isGroup && !settings.groupsEnabled && !ownerCommand) return;
-  if (!isGroup && !settings.privateEnabled && !ownerCommand) return;
+  if (!isGroup && !settings.privateEnabled && !ownerCommand && !ownerSelfCommand) return;
 
-  const displayName = getDisplayName(message, senderJid);
+  const displayName = ownerSelfCommand ? config.ownerName : getDisplayName(message, senderJid);
   let profile = db.users[senderJid];
-  if (!profile) {
+  if (ownerSelfCommand) {
+    profile = profile || createProfile({ id: senderJid, displayName });
+  } else if (!profile) {
     profile = createProfile({ id: senderJid, displayName });
     if (settings.welcomeEnabled) profile.welcomeSent = true;
     await db.setUser(senderJid, profile);
