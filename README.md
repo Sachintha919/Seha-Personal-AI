@@ -86,7 +86,7 @@ The project source, README, ZIP, and default JSON files contain **no real keys, 
 
 ### 3. Run the cells in order
 
-The notebook installs Node.js 22 and FFmpeg, downloads your GitHub repository, installs packages, creates a Kaggle-only auth folder, and starts Seha. A GitHub token is required in the Kaggle cell for the Contents API to read and write the database; it also allows cloning a private repository. When the eight-digit code appears:
+The notebook installs Node.js 22 and FFmpeg, updates your GitHub repository clone, builds the pinned Baileys LID/PN fix with the compatible `libsignal` revision, installs Seha's packages, and runs syntax checks and tests before starting Seha. A GitHub token is required in the Kaggle cell for the Contents API to read and write the database; it also allows cloning a private repository. When the eight-digit code appears:
 
 1. Open WhatsApp on the phone number you entered.
 2. Go to **Settings → Linked Devices → Link a Device**.
