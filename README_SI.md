@@ -71,6 +71,10 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 
 ඊට පස්සේ Kaggle එකේ පෙන්වන code එක ඇතුළත් කරන්න.
 
+## Owner self-chat එකෙන් commands යැවීම
+
+Bot එක link කරපු WhatsApp account එකේම **Message yourself** chat එකට `.list` හෝ `.owner status` වගේ dot-command එකක් යවන්නත් දැන් පුළුවන්. Self-chat එකෙන් Seha process කරන්නේ පැහැදිලි dot-commands විතරයි. සාමාන්‍ය outgoing messages process කරන්නේ නැහැ; එහෙම කළොත් bot reply loop එකක් ඇතිවෙන්න පුළුවන්.
+
 ## Commands
 
 | Command | වැඩේ |
@@ -118,7 +122,7 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 
 ## LID / Bad MAC error එකක් ආවොත්?
 
-මේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. Install කිරීමේදී `libsignal` TypeScript errors ආවොත්, GitHub එකේ අලුත් `kaggle/Seha_Kaggle_Setup.ipynb` එක භාවිතා කරන්න. එය ගැළපෙන `libsignal` revision එක pin කරලා Baileys build කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.
+මේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. තමන්ගේම linked account LID එකෙන් එන peer-sync message එකක ඒ තොරතුර නොතිබුණොත්, failed LID එක account එකේම LID එක බව තහවුරු වූ විට විතරක් account එකේ phone-number JID එකෙන් නැවත decrypt කරනවා. Install කිරීමේදී `libsignal` TypeScript errors ආවොත්, GitHub එකේ අලුත් `kaggle/Seha_Kaggle_Setup.ipynb` එක භාවිතා කරන්න. එය ගැළපෙන `libsignal` revision එක pin කරලා Baileys build කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.
 
 ## Kaggle session එක අවසන් වුණොත්?
 
