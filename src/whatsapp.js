@@ -30,10 +30,17 @@ export function extractText(message) {
   ).trim();
 }
 
-function getSender(message) {
-  const jid = message.key.remoteJid || '';
-  if (jid.endsWith('@g.us')) return message.key.participant || message.participant || '';
-  return jid;
+export function getSender(message) {
+  const key = message?.key || {};
+  const jid = key.remoteJid || '';
+
+  // WhatsApp may address a sender by LID. The patched Baileys build exposes
+  // the paired phone-number JID from the same stanza when it is available.
+  if (jid.endsWith('@g.us')) {
+    return key.participantPn || key.participant || message.participant || '';
+  }
+
+  return key.senderPn || key.remoteJidAlt || jid;
 }
 
 function getDisplayName(message, senderJid) {
