@@ -68,13 +68,13 @@ Seha-Personal-AI/
 
 ### 1. Use your GitHub repository
 
-Use your existing `Sachintha919/Seha-Personal-AI` repository. Upload the contents of this project ZIP to it (upload the files inside the folder, not the ZIP itself).
+The Kaggle notebook downloads the application source from the public `Sachintha919/Seha-Personal-AI` repository. The `GITHUB_OWNER` and `GITHUB_REPO` values in the Kaggle configuration cell are separate: they select where Seha stores profile/settings JSON through the GitHub API. The current notebook keeps the existing database at `praveenPro2012/Seha-Personal-AI`; keep those values if you want to continue using the same database. The old Kaggle project folder and its local JSON copies are left untouched.
 
 GitHub storage is mandatory. Create a fine-grained Personal Access Token with access to this repository and **Contents: Read and write** permission. Enter it only in the Kaggle notebook cell; it is not included in this project. This project stores profiles and settings on GitHub even when the repository is public, so those JSON records are publicly viewable.
 
 ### 2. Open the included notebook
 
-Open `kaggle/Seha_Kaggle_Setup.ipynb` in Kaggle, then edit the configuration cell. Add:
+Open `kaggle/Seha_Kaggle_Setup.ipynb` in Kaggle, then edit the configuration cell. Add your WhatsApp number and API keys. Keep `GITHUB_OWNER=praveenPro2012` and `GITHUB_REPO=Seha-Personal-AI` to preserve the current profile/settings database, unless you intentionally want a different database:
 
 - Owner WhatsApp number (Sri Lankan formats accepted: `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, or `94771234567`)
 - WhatsApp number to link (can be the same number)
@@ -86,7 +86,7 @@ The project source, README, ZIP, and default JSON files contain **no real keys, 
 
 ### 3. Run the cells in order
 
-The notebook installs Node.js 22 and FFmpeg, updates your GitHub repository clone, builds the pinned Baileys LID/PN fix with the compatible `libsignal` revision, installs Seha's packages, and runs syntax checks and tests before starting Seha. A GitHub token is required in the Kaggle cell for the Contents API to read and write the database; it also allows cloning a private repository. When the eight-digit code appears:
+The notebook installs Node.js 22 and FFmpeg, clones/updates application source from `Sachintha919/Seha-Personal-AI` into a new Kaggle folder, builds the pinned Baileys LID/PN fix with a narrow own-account LID fallback and compatible `libsignal` revision, installs Seha's packages, and runs syntax checks and tests before starting Seha. Profile/settings continue to be read/written in the separate database repository from the configuration cell. A GitHub token is required in the Kaggle cell for the Contents API to read and write the database; it also allows cloning a private repository. When the eight-digit code appears:
 
 1. Open WhatsApp on the phone number you entered.
 2. Go to **Settings → Linked Devices → Link a Device**.
@@ -132,7 +132,7 @@ Owner commands are authenticated using the sender's WhatsApp number, not their d
 - **Profiles and settings are GitHub-only.** The application reads and writes `database/users.json` and `database/settings.json` through the GitHub API. It never writes those records to Kaggle files.
 - The cloned `database/users.json` and `database/settings.json` files remain in the Kaggle project folder. They are not used for runtime storage: the bot reads and writes profile/settings data through GitHub API only. Data is held in process memory while running.
 - When GitHub is unavailable or the token lacks permission, saving fails; the bot does not use local storage.
-- The current repository is public, so profiles/settings JSON files committed there can be viewed by anyone. This is the requested one-time test setup.
+- The database repository selected by `GITHUB_OWNER` and `GITHUB_REPO` is public in the current setup, so its profile/settings JSON files can be viewed by anyone. This is the requested one-time test setup.
 - The WhatsApp pairing session stays under the Kaggle working directory and is excluded by `.gitignore`.
 
 Read [docs/PRIVACY.md](docs/PRIVACY.md) before using it with other people's chats.
