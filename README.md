@@ -141,10 +141,15 @@ Read [docs/PRIVACY.md](docs/PRIVACY.md) before using it with other people's chat
 
 These commands process media that is already sent to the bot or quoted in the current chat. They do not scrape or download from YouTube, TikTok, Instagram, or Facebook. Only convert files you own or have permission to use. Input files are capped at 25 MB; output files are capped by `MAX_MEDIA_MB` (15 MB by default).
 
+## Owner self-chat control
+
+The owner can send dot-commands such as `.list` or `.owner status` in the linked WhatsApp account's own **Message yourself** chat. Only explicit commands are processed in that self-chat; ordinary outgoing messages remain ignored to prevent reply loops. Commands from other chats continue to use the normal incoming-message flow.
+
 ## Troubleshooting
 
 - **Node version error:** rerun the notebook's first setup cell; Baileys requires a modern Node.js runtime.
-- **LID / Bad MAC errors:** this build retries decryption with the alternate PN/LID identity only when WhatsApp includes that paired identity in the encrypted-message stanza. If errors continue, the stanza may not include an alternate identity or there may be a separate WhatsApp/network initialization timeout; save the full fresh log for diagnosis.
+- **Startup `init queries` timeout:** this personal bot disables optional initial props/blocklist/privacy queries and fetches the current WhatsApp Web revision at startup. A remaining 408 on the WebSocket itself still needs a fresh log and network diagnosis.
+- **LID / Bad MAC errors:** this build retries with the alternate PN/LID identity from the stanza. For the linked account's own LID, the Kaggle installer also retries with the account's own PN only when the failed LID matches the account's stored LID. Other contacts are not guessed. If errors continue, save the full fresh log for diagnosis.
 - **No pairing code / invalid number:** use the exact number registered to the WhatsApp account being linked. Sri Lankan formats `0771234567`, `+94 77 123 4567`, `+94 077 123 4567`, and `94771234567` are normalized automatically. If the account is already registered in the Kaggle auth folder, a new code is not requested. An unregistered WhatsApp number cannot receive a pairing code.
 - **Gemini failed:** check your API key and current model availability. Groq is used only if a Groq key is configured and Gemini fails.
 - **GitHub storage fails:** confirm owner/repo names and that the token has Contents read/write permission for this repository.
