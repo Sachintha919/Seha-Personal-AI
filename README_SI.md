@@ -60,9 +60,10 @@ Project එකේ `kaggle/Seha_Kaggle_Setup.ipynb` file එක Kaggle notebook �
 ## පියවර 3 — Notebook cells එකින් එක run කරන්න
 
 1. පළමු cell එක Node.js 22 සහ FFmpeg install කරනවා.
-2. ඊළඟ cell එක GitHub repo එක download කරනවා.
-3. ඊළඟ cell එක npm packages install කරනවා.
-4. අවසාන cell එක Seha start කරනවා.
+2. ඊළඟ cell එක GitHub repo එක clone හෝ update කරනවා.
+3. ඊළඟ cell එක LID/PN fix එක සහිත Baileys source එකට ගැළපෙන `libsignal` version එක pin කරලා build කරනවා.
+4. ඊළඟට Seha packages install කරලා syntax checks සහ tests run කරනවා.
+5. අවසාන cell එක Seha start කරනවා.
 
 Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එනවා. Phone එකේ:
 
@@ -115,7 +116,9 @@ Kaggle output එකේ ඉලක්කම් 8ක pairing code එකක් එ
 
 **සටහන:** දැනට repository එක Public. එහි save කරන profile/settings JSON files වෙනත් අයටත් බලන්න පුළුවන්. මේක ඔයා ඉල්ලූ one-time test setup එකට එහෙම configure කරලා තියෙනවා.
 
-## LID / Bad MAC error එකක් ආවොත්?\n\nමේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. Install කිරීමේදී `libsignal` TypeScript errors ආවොත්, GitHub එකේ අලුත් `kaggle/Seha_Kaggle_Setup.ipynb` එක භාවිතා කරන්න. එය ගැළපෙන `libsignal` revision එක pin කරලා Baileys build කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.
+## LID / Bad MAC error එකක් ආවොත්?
+
+මේ build එක WhatsApp message එකේ paired PN/LID identity එක ලබාදී තිබුණොත් විකල්ප identity එකෙන් decrypt කිරීම නැවත උත්සාහ කරනවා. Install කිරීමේදී `libsignal` TypeScript errors ආවොත්, GitHub එකේ අලුත් `kaggle/Seha_Kaggle_Setup.ipynb` එක භාවිතා කරන්න. එය ගැළපෙන `libsignal` revision එක pin කරලා Baileys build කරනවා. WhatsApp stanza එකේ ඒ identity එක නොතිබුණොත් මේ retry එක කරන්න බැහැ. එහෙම වෙලාවක අලුත් log එක සම්පූර්ණයෙන් ලබාගන්න; `408 Request Time-out` එක වෙනම network/WhatsApp initialization ගැටලුවක් විය හැකියි.
 
 ## Kaggle session එක අවසන් වුණොත්?
 
